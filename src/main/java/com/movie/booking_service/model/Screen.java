@@ -20,8 +20,8 @@ public class Screen extends BaseModel {
     private int NumberOfSeats;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id", nullable = false)
-    private Theater theater;
+    @JoinColumn(name = "cinema_id", nullable = false)
+    private Cinema cinema;
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seat> seats;

@@ -12,18 +12,15 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="theater")
-public class Theater extends BaseModel {
+@Table(name="cinema")
+public class Cinema extends BaseModel {
     @Id
     private UUID id;
     private String name;
-    private String city;
-    private String state;
-    private String pinCode;
     @Enumerated(EnumType.STRING)
-    private TheaterStatus status;
+    private CinemaStatus status;
     @Embedded
     private Address address;
-    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Screen> screens;
 }

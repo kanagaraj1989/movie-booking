@@ -1,9 +1,6 @@
 package com.movie.booking_service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +25,6 @@ public class Movie {
     private Genre genre;
     private int duration;
     private LocalDateTime releaseDate;
+    @OneToMany(mappedBy ="movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Show> shows;
 }
