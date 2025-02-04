@@ -1,5 +1,6 @@
 package com.movie.booking_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +16,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "city")
 public class City {
-    @Id
-    private UUID id;
     private String name;
     private String state;
     private String country;
     private Set<String> pinCodes;
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Cinema> cinema;
+    @JoinColumn(name = "cinema_id", nullable = false)
+    @JsonIgnore
+    private Set<Cinema> cinema;
 }

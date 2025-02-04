@@ -1,27 +1,34 @@
 package com.movie.booking_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "showSeats")
 @Entity
 @Table(name = "seat")
 public class Seat extends BaseModel {
-    @Id
-    private UUID id;
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
     private String rowNumber;
     private int columnNumber;
     @Enumerated(EnumType.STRING)
     private SeatType type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "screen_id", nullable = false)
     private Screen screen;
+
+    @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ShowSeat> showSeats;
 }

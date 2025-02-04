@@ -15,8 +15,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "movie")
 public class Movie {
-    @Id
-    private UUID id;
     private String name;
     private String summary;
     private List<String> language;
@@ -26,5 +24,6 @@ public class Movie {
     private int duration;
     private LocalDateTime releaseDate;
     @OneToMany(mappedBy ="movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
     private List<Show> shows;
 }

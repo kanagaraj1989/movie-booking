@@ -1,5 +1,6 @@
 package com.movie.booking_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name="screen")
 public class Screen extends BaseModel {
-    @Id
-    private UUID id;
     private String name;
     private int NumberOfSeats;
 
@@ -24,8 +23,12 @@ public class Screen extends BaseModel {
     private Cinema cinema;
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Seat> seats;
 
     @Enumerated(EnumType.STRING)
     private ScreenStatus status;
+
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Show> shows;
 }
