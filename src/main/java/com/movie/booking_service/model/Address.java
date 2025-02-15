@@ -15,8 +15,5 @@ import lombok.EqualsAndHashCode;
 public class Address {
     private String addressLine1;
     private String addressLine2;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", nullable = false)
-    private City city;
     private String pinCode;
 }

@@ -8,12 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "showSeats")
+@EqualsAndHashCode(exclude = "showSeats", callSuper = true)
 @Entity
 @Table(name = "seat")
 public class Seat extends BaseModel {
