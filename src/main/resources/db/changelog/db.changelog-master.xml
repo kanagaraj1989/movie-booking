@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="001-create-city" author="kanagaraj">
+        <sqlFile path="sql/001-create-city.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="002-create-cinema" author="kanagaraj">
+        <sqlFile path="sql/002-create-cinema.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="003-create-screen" author="kanagaraj">
+        <sqlFile path="sql/003-create-screen.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="004-create-seat" author="kanagaraj">
+        <sqlFile path="sql/004-create-seat.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="005-create-movie" author="kanagaraj">
+        <sqlFile path="sql/005-create-movie.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="006-create-show" author="kanagaraj">
+        <sqlFile path="sql/006-create-show.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="007-create-show-seat" author="kanagaraj">
+        <sqlFile path="sql/007-create-show-seat.sql" relativeToChangelogFile="true" />
+    </changeSet>
+</databaseChangeLog>

@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.liquibase.gradle' version '2.2.0'  // for Liquibase
 }
 
 group = 'com.movie'
@@ -21,8 +22,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.liquibase:liquibase-core'
 	runtimeOnly 'com.h2database:h2'
 	// runtimeOnly "org.postgresql:postgresql"
+
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 	testImplementation 'org.mockito:mockito-core:5.3.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -34,3 +37,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+liquibase {
+	activities {
+		main {
+			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
+			url 'jdbc:h2:mem:testdb'
+			username 'sa'
+			password ''
+			driver 'org.h2.Driver'
+		}
+	}
+	runList = 'main'
+}
+
