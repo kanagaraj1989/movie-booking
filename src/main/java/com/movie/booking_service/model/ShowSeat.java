@@ -22,4 +22,8 @@ public class ShowSeat extends BaseModel {
 
     @Enumerated(EnumType.STRING)
     private ShowSeatStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="booking_id", nullable = false)
+    private Booking booking;
 }

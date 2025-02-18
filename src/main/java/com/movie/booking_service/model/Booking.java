@@ -1,5 +1,6 @@
 package com.movie.booking_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,10 +17,9 @@ import java.util.List;
 @Entity
 @Table(name="booking")
 public class Booking extends BaseModel {
-    @ElementCollection
-    @CollectionTable(name = "booking_show_seat", joinColumns = @JoinColumn(name = "booking_id"))
-    @Column(name = "show_seat_id")
-    private List<String> showSeatIds;  // Store list of ShowSeat IDs
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ShowSeat> showSeats;
 
     // User Details
     private String userId;
@@ -41,7 +41,6 @@ public class Booking extends BaseModel {
 
     // Show Details
     private LocalDateTime showTime;
-    private String showType;
 
     // Seat Details
     private String seatId;

@@ -22,7 +22,13 @@
     <changeSet id="006-create-show" author="kanagaraj">
         <sqlFile path="sql/006-create-show.sql" relativeToChangelogFile="true" />
     </changeSet>
-    <changeSet id="007-create-show-seat" author="kanagaraj">
-        <sqlFile path="sql/007-create-show-seat.sql" relativeToChangelogFile="true" />
+    <changeSet id="007-create-booking" author="kanagaraj">
+        <sqlFile path="sql/007-booking.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="008-create-show-seat" author="kanagaraj">
+        <sqlFile path="sql/008-create-show-seat.sql" relativeToChangelogFile="true" />
+    </changeSet>
+    <changeSet id="009-create-user" author="kanagaraj">
+        <sqlFile path="sql/009-create-user.sql" relativeToChangelogFile="true" />
     </changeSet>
 </databaseChangeLog>
