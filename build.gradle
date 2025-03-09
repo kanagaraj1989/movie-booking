@@ -22,6 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta:2.18.2' // Jackson ignore to serialize hibernateLazyInitializer
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310' //Jackson to properly serialize/deserialize LocalDateTime.
 	implementation 'org.liquibase:liquibase-core'
 	runtimeOnly 'com.h2database:h2'
 	// runtimeOnly "org.postgresql:postgresql"

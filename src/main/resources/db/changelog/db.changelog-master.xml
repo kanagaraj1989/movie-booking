@@ -31,4 +31,7 @@
     <changeSet id="009-create-user" author="kanagaraj">
         <sqlFile path="sql/009-create-user.sql" relativeToChangelogFile="true" />
     </changeSet>
+    <changeSet id="010-initial-data-set" author="kanagaraj">
+        <sqlFile path="sql/010-initial-data-set.sql" relativeToChangelogFile="true" />
+    </changeSet>
 </databaseChangeLog>
