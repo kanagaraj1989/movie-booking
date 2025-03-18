@@ -9,9 +9,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class ShowDTO {
-    private UUID id;
-    private MovieDTO movie;
-    private CinemaDTO cinema;
+    private List<CinemaDTO> cinema;
 
     @Data
     @AllArgsConstructor
@@ -25,6 +23,7 @@ public class ShowDTO {
     public static class CinemaDTO {
         private UUID id;
         private String name;
+        private MovieDTO movie;
         private List<ScreenDTO> screens;
 
         @Data
@@ -32,6 +31,7 @@ public class ShowDTO {
         public static class ScreenDTO {
             private UUID id;
             private String name;
+            private UUID showId;
             private String showStartTime;
             private String showEndTime;
         }
