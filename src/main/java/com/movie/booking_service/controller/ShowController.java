@@ -3,6 +3,10 @@ package com.movie.booking_service.controller;
 import com.movie.booking_service.dto.ShowDTO;
 import com.movie.booking_service.model.Show;
 import com.movie.booking_service.service.ShowService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +26,18 @@ import java.util.UUID;
 public class ShowController {
 
     private final ShowService showService;
-    
+
+    @Operation(summary = "Get All Show by City and movie name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved shows"),
+            @ApiResponse(responseCode = "400", description = "Client error")
+    })
     @GetMapping
-    public ResponseEntity<ShowDTO> getsAllShowsByCityName(@RequestParam String cityName, @RequestParam String movieName) {
+    public ResponseEntity<ShowDTO> getsAllShowsByCityName(
+            @Parameter(description = "Name of the city", example = "Chennai", required = true)
+            @RequestParam String cityName,
+            @Parameter(description = "Name of the movie", example = "Avenger", required = true)
+            @RequestParam String movieName) {
         var shows = showService.getAllShowsByCityName(cityName, movieName);
         return ResponseEntity.ok(generateShowDTO(shows));
     }

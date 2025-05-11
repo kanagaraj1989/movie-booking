@@ -24,10 +24,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta:2.18.2' // Jackson ignore to serialize hibernateLazyInitializer
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310' //Jackson to properly serialize/deserialize LocalDateTime.
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 	implementation 'org.liquibase:liquibase-core'
 	runtimeOnly 'com.h2database:h2'
 	// runtimeOnly "org.postgresql:postgresql"
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 	testImplementation 'org.mockito:mockito-core:5.3.1'
@@ -39,18 +39,5 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-liquibase {
-	activities {
-		main {
-			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
-			url 'jdbc:h2:mem:testdb'
-			username 'sa'
-			password ''
-			driver 'org.h2.Driver'
-		}
-	}
-	runList = 'main'
 }
 
