@@ -38,7 +38,7 @@ public class ShowController {
             @RequestParam String cityName,
             @Parameter(description = "Name of the movie", example = "Avenger", required = true)
             @RequestParam String movieName) {
-        var shows = showService.getAllShowsByCityName(cityName, movieName);
+        var shows = showService.getAllShowsByCityAndMovieName(cityName, movieName);
         return ResponseEntity.ok(generateShowDTO(shows));
     }
 
