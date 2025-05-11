@@ -1,19 +1,16 @@
 package com.movie.booking_service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(exclude = {"screens", "city"}, callSuper = true)
 @Table(name="cinema")
 public class Cinema extends BaseModel {
     private String name;
@@ -22,7 +19,6 @@ public class Cinema extends BaseModel {
     @Embedded
     private Address address;
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Screen> screens;
 
     @ManyToOne(fetch = FetchType.LAZY)

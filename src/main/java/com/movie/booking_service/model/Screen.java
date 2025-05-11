@@ -1,19 +1,16 @@
 package com.movie.booking_service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(exclude = {"cinema", "seats", "shows"}, callSuper = true)
 @Table(name="screen")
 public class Screen extends BaseModel {
     private String name;
@@ -24,7 +21,6 @@ public class Screen extends BaseModel {
     private Cinema cinema;
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Seat> seats;
 
     @Enumerated(EnumType.STRING)

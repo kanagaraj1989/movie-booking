@@ -1,7 +1,5 @@
 package com.movie.booking_service.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,16 +12,15 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @MappedSuperclass
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BaseModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID" , strategy = GenerationType.AUTO)
+    @Column(updatable = false, nullable = false)
     private UUID id;
     @CreationTimestamp
-    @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(updatable = false, nullable = false)
     protected LocalDateTime createdAt;
     @UpdateTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(nullable = false)
     protected LocalDateTime updatedAt;
 }

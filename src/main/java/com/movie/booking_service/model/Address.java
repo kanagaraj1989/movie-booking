@@ -3,10 +3,8 @@ package com.movie.booking_service.model;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Embeddable
-@EqualsAndHashCode
 @Data
 @AllArgsConstructor
 public class Address {

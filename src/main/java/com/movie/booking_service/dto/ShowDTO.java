@@ -3,6 +3,7 @@ package com.movie.booking_service.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ShowDTO {
     private List<CinemaDTO> cinema;
+    private LocalDateTime requestTime;
 
     @Data
     @AllArgsConstructor

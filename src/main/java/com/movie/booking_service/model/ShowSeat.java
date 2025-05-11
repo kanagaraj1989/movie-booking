@@ -1,22 +1,21 @@
 package com.movie.booking_service.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(exclude = {"show","seat","booking"}, callSuper = true)
 @Table(name = "show_seat")
 public class ShowSeat extends BaseModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
 

@@ -13,8 +13,11 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.registerModule(new Hibernate5JakartaModule()); // Handles lazy loading issues - Jackson ignore to serialize hibernateLazyInitializer
+        //objectMapper.registerModule(new Hibernate5JakartaModule()); // Handles lazy loading issues - Jackson ignore to serialize hibernateLazyInitializer
         objectMapper.registerModule(new JavaTimeModule()); // Registers JavaTimeModule for LocalDateTime
+        // default jackson is serializing your LocalDateTime as a timestamp array (eg: [2025, 4, 6, 12, 47, 20, 582493000])
+        // instead of an ISO-8601 string
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return objectMapper;
     }
 }
