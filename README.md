@@ -24,8 +24,11 @@ facilitate ticket bookings. It provides RESTful APIs for retrieving available sh
 * Clone the Repository
     * git clone https://github.com/kanagaraj1989/movie-booking.git
     * cd movie-booking
-    
-# How to run
+
+#How to run test
+    ./gradlew test
+
+# How to run application
     ./gradlew run
     The application will start on http://localhost:8080
 
@@ -47,3 +50,9 @@ facilitate ticket bookings. It provides RESTful APIs for retrieving available sh
 * This project utilizes Liquibase for managing, tracking, and automating database schema changes.
     * Changelogs are defined in the `src/main/resources/db/changelog/sql/` directory
     * Liquibase applies these changelogs automatically on application startup.
+
+#Docker
+* How to build image
+    * docker build -t movie-booking-service .
+* How to run the container
+    * docker run -p 8080:8080 movie-booking-service
