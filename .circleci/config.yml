@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     machine:
-      - image: default
+      image: default
     steps:
       - checkout
       # Install Docker CLI inside the container
