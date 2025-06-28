@@ -6,16 +6,12 @@ jobs:
       image: default
     steps:
       - checkout
-      # Install Docker CLI inside the container
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
           name: Build JAR using Gradle
           command: ./gradlew clean build
       - run:
           name: Build Docker image locally
           command: docker build -t booking-service:latest .
-
 workflows:
   build_and_test:
     jobs:
