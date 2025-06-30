@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.12.5  # Slack orb for notifications
+
 jobs:
   build:
     machine:
@@ -12,7 +15,21 @@ jobs:
       - run:
           name: Build Docker image locally
           command: docker build -t booking-service:latest .
+  notify:
+    machine:
+      image: default
+    steps:
+      - run:
+          name: send Slack notification
+          command: echo "Build and test completed successfully!"
+      - slack/notify:
+          event: pass
+          channel: '#build-notifications'
+          template: basic_success_1
 workflows:
   build_and_test:
     jobs:
       - build
+      - notify:
+          requires:
+            - build  #Only runs after build passes
