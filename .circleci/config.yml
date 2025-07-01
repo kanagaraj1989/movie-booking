@@ -49,6 +49,9 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - test:
+          requires:
+            - build  # Only runs after build passes
       - notify:
           requires:
             - build  #Only runs after build passes
