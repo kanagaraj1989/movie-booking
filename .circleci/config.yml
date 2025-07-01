@@ -23,17 +23,25 @@ jobs:
           paths:
             - booking-service.tar  # Save the Docker image tar file to workspace
   test:
-    machine:
-      image: default
+    docker:
+      - image: cimg/openjdk:17.0  # Base executor image
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Load docker image
-          command: docker load -i /tmp/workspace/booking-service.tar
+      - checkout
       - run:
           name: Run Tests
-          command: docker run --rm booking-service:latest ./gradlew test
+          command: ./gradlew clean test
+  #test:
+  #  machine:
+  #    image: default
+  #  steps:
+  #    - attach_workspace:
+  #        at: /tmp/workspace
+  #    - run:
+  #        name: Load docker image
+  #        command: docker load -i /tmp/workspace/booking-service.tar
+  #    - run:
+  #        name: Run Tests
+  #        command: docker run --rm booking-service:latest ./gradlew test
   notify:
     machine:
       image: default
@@ -54,4 +62,4 @@ workflows:
             - build  # Only runs after build passes
       - notify:
           requires:
-            - build  #Only runs after build passes
+            - test  #Only runs after test passes
