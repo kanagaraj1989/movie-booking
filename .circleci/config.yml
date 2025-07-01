@@ -29,8 +29,8 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-        name: Load docker image
-        command: docker load -i /tmp/workspace/booking-service.tar
+          name: Load docker image
+          command: docker load -i /tmp/workspace/booking-service.tar
       - run:
           name: Run Tests
           command: docker run --rm booking-service:latest ./gradlew test
