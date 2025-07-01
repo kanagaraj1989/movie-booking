@@ -28,7 +28,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      -run:
+      - run:
         name: Load docker image
         command: docker load -i /tmp/workspace/booking-service.tar
       - run:
