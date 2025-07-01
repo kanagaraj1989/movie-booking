@@ -15,6 +15,25 @@ jobs:
       - run:
           name: Build Docker image locally
           command: docker build -t booking-service:latest .
+      - run:
+          name: Save docker image to a file
+          command: docker save booking-service:latest -o booking-service.tar
+      - persist_to_workspace:
+          root: .
+          paths:
+            - booking-service.tar  # Save the Docker image tar file to workspace
+  test:
+    machine:
+      image: default
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      -run:
+        name: Load docker image
+        command: docker load -i /tmp/workspace/booking-service.tar
+      - run:
+          name: Run Tests
+          command: docker run --rm booking-service:latest ./gradlew test
   notify:
     machine:
       image: default
