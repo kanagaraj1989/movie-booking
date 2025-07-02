@@ -15,11 +15,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-            docker_layer_caching: true   # Enable DLC
+          docker_layer_caching: true   # Enable DLC
       - run:
           name: Build JAR using Gradle
           command: ./gradlew clean build
-     - run:
+      - run:
          name: Build Docker image locally
          command: docker build -t booking-service:latest .
   build:
@@ -82,13 +82,13 @@ workflows:
       - notify:
           requires:
             - test  #Only runs after test passes
-    fast_build_and_test:
-      when: not << parameters.debug >>  # Run this workflow only if debug is false
-      jobs:
-        - fast-build
-        - test:
-            requires:
-              -fast-build # Only runs after fast-build passes
-        - notify:
-            requires:
-              - test  # Only runs after test passes
+  fast_build_and_test:
+    when: not << parameters.debug >>  # Run this workflow only if debug is false
+    jobs:
+      - fast-build
+      - test:
+          requires:
+            - fast-build # Only runs after fast-build passes
+      - notify:
+          requires:
+            - test  # Only runs after test passes
