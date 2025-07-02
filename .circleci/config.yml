@@ -1,16 +1,32 @@
 version: 2.1
 
+parameters:
+  debug:
+    type: boolean
+    default: false  # Default value for debug parameter
+
 orbs:
   slack: circleci/slack@4.12.5  # Slack orb for notifications
 
 jobs:
+  fast-build:
+    docker:
+      - image: cimg/openjdk:17.0  # Base executor image
+    steps:
+      - checkout
+      - setup_remote_docker:
+            docker_layer_caching: true   # Enable DLC
+      - run:
+          name: Build JAR using Gradle
+          command: ./gradlew clean build
+     - run:
+         name: Build Docker image locally
+         command: docker build -t booking-service:latest .
   build:
     machine:
       image: default
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true   # Enable DLC
       - run:
           name: Build JAR using Gradle
           command: ./gradlew clean build
@@ -57,6 +73,7 @@ jobs:
           template: basic_success_1
 workflows:
   build_and_test:
+    when: << parameters.debug >>  # Run this workflow only if debug is true
     jobs:
       - build
       - test:
@@ -65,3 +82,13 @@ workflows:
       - notify:
           requires:
             - test  #Only runs after test passes
+    fast_build_and_test:
+      when: not << parameters.debug >>  # Run this workflow only if debug is false
+      jobs:
+        - fast-build
+        - test:
+            requires:
+              -fast-build # Only runs after fast-build passes
+        - notify:
+            requires:
+              - test  # Only runs after test passes
