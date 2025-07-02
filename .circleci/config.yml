@@ -73,7 +73,7 @@ jobs:
           template: basic_success_1
 workflows:
   build_and_test:
-    when: << parameters.debug >>  # Run this workflow only if debug is true
+    when: << pipeline.parameters.debug >>  # Run this workflow only if debug is true
     jobs:
       - build
       - test:
@@ -83,7 +83,7 @@ workflows:
           requires:
             - test  #Only runs after test passes
   fast_build_and_test:
-    when: not << parameters.debug >>  # Run this workflow only if debug is false
+    when: not << pipeline.parameters.debug >>  # Run this workflow only if debug is false
     jobs:
       - fast-build
       - test:
