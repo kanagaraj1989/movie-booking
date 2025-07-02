@@ -1,7 +1,16 @@
 # stage 1 : Build
 FROM gradle:7.6.4-jdk17 AS build
-COPY --chown=gradle:gradle . /home/gradle/project
 WORKDIR /home/gradle/project
+
+# Copy only build scripts first
+COPY --chown=gradle:gradle build.gradle settings.gradle gradle/ ./
+
+# Download dependencies separately — this layer gets reused until you change build.gradle!
+RUN gradle dependencies --no-daemon || return 0
+
+# Copy the rest of your app source
+COPY --chown=gradle:gradle . .
+# Now build the final JAR
 RUN gradle clean bootJar --no-daemon
 
 # stage 2 : Run

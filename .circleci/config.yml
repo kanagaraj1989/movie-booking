@@ -9,6 +9,8 @@ jobs:
       image: default
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true   # Enable DLC
       - run:
           name: Build JAR using Gradle
           command: ./gradlew clean build
