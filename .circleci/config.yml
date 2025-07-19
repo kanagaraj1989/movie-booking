@@ -25,6 +25,7 @@ jobs:
   build:
     machine:
       image: default
+      docker_layer_caching: true  # Enable Docker Layer Caching (DLC). CircleCI retains the Docker cache layers in a shared external volume.
     steps:
       - checkout
       - run:

@@ -3,6 +3,7 @@ FROM gradle:7.6.4-jdk17 AS build
 WORKDIR /home/gradle/project
 
 # Copy only build scripts first
+# This layer is cached in Docker, so it speeds up builds when you change your source code but not your build scripts
 COPY --chown=gradle:gradle build.gradle settings.gradle gradle/ ./
 
 # Download dependencies separately — this layer gets reused until you change build.gradle!
