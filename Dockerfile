@@ -17,6 +17,7 @@ RUN gradle clean bootJar --no-daemon
 # stage 2 : Run
 FROM openjdk:17-jdk-slim
 WORKDIR /app
+# --from=build tells, Docker to copy files from the named build stage “build” instead of re-running build commands (`gradle:7.6.4-jdk17 AS build`).
 COPY --from=build /home/gradle/project/build/libs/booking-service-0.0.1-SNAPSHOT.jar app.jar
 # Health check to verify the application is responding
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
