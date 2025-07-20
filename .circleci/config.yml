@@ -3,10 +3,24 @@ version: 2.1
 parameters:
   debug:
     type: boolean
-    default: true  # Default value for debug parameter
+    default: false  # Default value for debug parameter
 
 orbs:
   slack: circleci/slack@4.12.5  # Slack orb for notifications
+  aws-ecr: circleci/aws-ecr@9.5.4  # AWS ECR orb for Docker image management
+
+commands:
+  ecr_push:
+    description: "Push Docker image to AWS ECR"
+    parameters:
+      tag:
+        type: string
+        default: << pipeline.git.branch >>
+    steps:
+      - aws-ecr/build-and-push-image:
+          account-url: $AWS_ECR_ACCOUNT_URL
+          repo: booking-service
+          tag: <<parameters.tag>>
 
 jobs:
   fast-build:
@@ -21,7 +35,9 @@ jobs:
           command: ./gradlew clean build
       - run:
          name: Build Docker image locally
-         command: docker build -t booking-service:latest .
+         command: docker build -t booking-service:$CIRCLE_SHA1 .
+      - ecr_push:
+          tag: $CIRCLE_SHA1  # Push the Docker image to AWS ECR with the commit SHA as the tag
   build:
     machine:
       image: default
@@ -41,6 +57,8 @@ jobs:
           root: .
           paths:
             - booking-service.tar  # Save the Docker image tar file to workspace
+      - ecr_push:
+          tag: $CIRCLE_SHA1  # Push the Docker image to AWS ECR with the commit SHA as the tag
   test:
     docker:
       - image: cimg/openjdk:17.0  # Base executor image
