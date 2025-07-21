@@ -68,7 +68,7 @@ jobs:
           command: ./gradlew clean build
       - run:
           name: Build Docker image locally
-          command: docker build -t booking-service:latest .
+          command: docker build -t booking-service:$CIRCLE_SHA1 .
       - run:
           name: Save docker image to a file
           command: docker save booking-service:latest -o booking-service.tar
