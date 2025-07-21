@@ -7,20 +7,27 @@ parameters:
 
 orbs:
   slack: circleci/slack@4.12.5  # Slack orb for notifications
-  aws-ecr: circleci/aws-ecr@9.5.4  # AWS ECR orb for Docker image management
 
 commands:
   ecr_push:
-    description: "Push Docker image to AWS ECR"
+    description: "Authenticate, tag & push Docker image to AWS ECR"
     parameters:
       tag:
         type: string
         default: << pipeline.git.branch >>
     steps:
-      - aws-ecr/build-and-push-image:
-          account-url: $AWS_ECR_ACCOUNT_URL
-          repo: booking-service
-          tag: <<parameters.tag>>
+      - run:
+        name: "Login to AWS ECR"
+        command: | # get-login-password output into docker login, so we need pipe between commands
+          aws ecr get-login-password \
+            --region $AWS_REGION \
+          | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL
+      - run:
+        name: "Tag & Push Docker image"
+        command: |
+          docker tag <<parameters.image_name>>:<<parameters.tag>> \
+            $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
+          docker push $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
 
 jobs:
   fast-build:
@@ -37,7 +44,9 @@ jobs:
          name: Build Docker image locally
          command: docker build -t booking-service:$CIRCLE_SHA1 .
       - ecr_push:
+          image_name: booking-service  # Name of the Docker image
           tag: $CIRCLE_SHA1  # Push the Docker image to AWS ECR with the commit SHA as the tag
+
   build:
     machine:
       image: default
@@ -58,7 +67,9 @@ jobs:
           paths:
             - booking-service.tar  # Save the Docker image tar file to workspace
       - ecr_push:
+          image_name: booking-service  # Name of the Docker image
           tag: $CIRCLE_SHA1  # Push the Docker image to AWS ECR with the commit SHA as the tag
+
   test:
     docker:
       - image: cimg/openjdk:17.0  # Base executor image
