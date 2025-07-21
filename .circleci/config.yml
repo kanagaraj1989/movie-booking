@@ -34,14 +34,11 @@ commands:
 jobs:
   fast-build:
     docker:
-      - image: cimg/aws:2025.01-node  # example variant with extra tools
+      - image: cimg/aws:2025.01  # includes AWS CLI
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true   # Enable DLC
-      - run:
-          name: Build JAR using Gradle
-          command: ./gradlew clean build
       - run:
          name: Build Docker image locally
          command: docker build -t booking-service:$CIRCLE_SHA1 .
