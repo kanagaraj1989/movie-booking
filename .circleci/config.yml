@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   debug:
     type: boolean
-    default: false  # Default value for debug parameter
+    default: true  # Default value for debug parameter
 
 orbs:
   slack: circleci/slack@4.12.5  # Slack orb for notifications
@@ -126,12 +126,12 @@ workflows:
     when: not << pipeline.parameters.debug >>  # Run this workflow only if debug is false
     jobs:
       - fast-build
-      - build_image_and_push:
-          requires:
-            - fast-build  # Only runs after unit-test passes
       - test:
           requires:
             - fast-build # Only runs after fast-build passes
-      - notify:
+      - build_image_and_push:
           requires:
             - test  # Only runs after test passes
+      - notify:
+          requires:
+            - build_image_and_push
