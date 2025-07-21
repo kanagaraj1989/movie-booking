@@ -28,8 +28,8 @@ commands:
           name: "Tag & Push Docker image"
           command: |
             docker tag <<parameters.image_name>>:<<parameters.tag>> \
-              $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
-            docker push $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
+              $AWS_ECR_ACCOUNT_URL:<<parameters.tag>>
+            docker push $AWS_ECR_ACCOUNT_URL:<<parameters.tag>>
 
 jobs:
   fast-build:
