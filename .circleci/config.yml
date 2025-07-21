@@ -125,8 +125,8 @@ workflows:
   fast_build_and_test:
     when: not << pipeline.parameters.debug >>  # Run this workflow only if debug is false
     jobs:
-      - fast-build
-      - build_image_and_push
+      - fast-build:
+      - build_image_and_push:
           requires:
             - fast-build  # Only runs after unit-test passes
       - test:
