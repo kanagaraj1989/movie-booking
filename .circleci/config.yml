@@ -12,22 +12,24 @@ commands:
   ecr_push:
     description: "Authenticate, tag & push Docker image to AWS ECR"
     parameters:
+      image_name:
+        type: string
       tag:
         type: string
         default: << pipeline.git.branch >>
     steps:
       - run:
-        name: "Login to AWS ECR"
-        command: | # get-login-password output into docker login, so we need pipe between commands
-          aws ecr get-login-password \
-            --region $AWS_REGION \
-          | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL
+          name: "Login to AWS ECR"
+          command: | # get-login-password output into docker login, so we need pipe between commands
+            aws ecr get-login-password \
+              --region $AWS_REGION \
+            | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL
       - run:
-        name: "Tag & Push Docker image"
-        command: |
-          docker tag <<parameters.image_name>>:<<parameters.tag>> \
-            $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
-          docker push $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
+          name: "Tag & Push Docker image"
+          command: |
+            docker tag <<parameters.image_name>>:<<parameters.tag>> \
+              $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
+            docker push $AWS_ECR_ACCOUNT_URL/<<parameters.image_name>>:<<parameters.tag>>
 
 jobs:
   fast-build:
