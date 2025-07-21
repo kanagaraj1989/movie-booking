@@ -34,8 +34,7 @@ commands:
 jobs:
   fast-build:
     docker:
-      - image: cimg/openjdk:17.0  # Base executor image
-      - image: cimg/aws:2025.01  # includes AWS CLI
+      - image: cimg/aws:2025.01-node  # example variant with extra tools
     steps:
       - checkout
       - setup_remote_docker:
