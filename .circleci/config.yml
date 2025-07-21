@@ -34,6 +34,17 @@ commands:
 jobs:
   fast-build:
     docker:
+      - image: cimg/openjdk:17.0  # Base executor image
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true   # Enable DLC
+      - run:
+          name: Build JAR using Gradle
+          command: ./gradlew clean build
+
+  build_image_and_push:
+    docker:
       - image: cimg/aws:2025.01  # includes AWS CLI
     steps:
       - checkout
@@ -115,6 +126,9 @@ workflows:
     when: not << pipeline.parameters.debug >>  # Run this workflow only if debug is false
     jobs:
       - fast-build
+      - build_image_and_push
+          requires:
+            - fast-build  # Only runs after unit-test passes
       - test:
           requires:
             - fast-build # Only runs after fast-build passes
